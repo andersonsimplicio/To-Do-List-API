@@ -1,0 +1,38 @@
+### Compilação do Maven (Nunca versionar)
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+### Arquivos e pastas do VS Code
+.vscode/
+*.code-workspace
+
+### Arquivos do IntelliJ IDEA (caso use no futuro)
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+### Arquivos do Eclipse (gerados pelo language server)
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### Logs e arquivos temporários do Linux/OS
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
