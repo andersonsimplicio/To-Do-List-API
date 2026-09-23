@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequestMapping("/users")
 public class UserController {
     
-     @PostMapping("/")
+     @PostMapping
     public void created(@RequestBody UserModel user){
         System.out.println("Nome: "+user.getName() +" "+ user.getUserName());
     }
