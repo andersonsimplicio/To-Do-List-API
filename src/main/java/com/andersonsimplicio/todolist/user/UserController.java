@@ -3,21 +3,36 @@ package com.andersonsimplicio.todolist.user;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import lombok.RequiredArgsConstructor;
 
 @RestController 
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired 
-    private UserRepository userRepository;
+   
+    private final UserRepository userRepository;
 
     @PostMapping
-    public UserModel created(@RequestBody UserModel user){
-        System.out.println("Nome: "+user.getName() +" "+ user.getUsername());
-        var user_created = this.userRepository.save(user);
-        return user_created;
+    public ResponseEntity created(@RequestBody UserModel userModel){
+       
+        var user = this.userRepository.findByUsername(userModel.getUsername());
+        var passwordHash =  BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
+
+        if(user!= null)
+        {
+            System.out.println("Usuario já existe");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário já existe!");
+        }
+        userModel.setPassword(passwordHash);
+        System.out.println("Nome: "+userModel.getName() +" "+ userModel.getUsername());
+        var user_created = this.userRepository.save(userModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(user_created);
 
     }
 }
